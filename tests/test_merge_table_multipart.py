@@ -36,10 +36,9 @@ class MergeTableRowsMultipartTest(EtreeMixin, unittest.TestCase):
         with tempfile.TemporaryFile() as outfile:
             self.document.write(outfile)
 
-        self.assertEqual(ElementTree.tostring(list(self.document.parts.values())[0].getroot()).decode('utf-8'),
-            self.expected_xml)
-        self.assert_equal_tree(self.expected_tree,
-                               list(self.document.parts.values())[0].getroot())
+        for part in self.document.parts.values():
+            if (part.getroot().tag == '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}document'):
+                self.assert_equal_tree(self.expected_tree, part.getroot())
 
     def test_merge_unified_on_multipart_file(self):
         self.document.merge(
@@ -56,6 +55,7 @@ class MergeTableRowsMultipartTest(EtreeMixin, unittest.TestCase):
         with tempfile.TemporaryFile() as outfile:
             self.document.write(outfile)
 
-        self.assert_equal_tree(self.expected_tree,
-                               list(self.document.parts.values())[0].getroot())
+        for part in self.document.parts.values():
+            if (part.getroot().tag == '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}document'):
+                self.assert_equal_tree(self.expected_tree, part.getroot())
 
