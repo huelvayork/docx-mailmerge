@@ -28,6 +28,10 @@ class MergeTableRowsMultipartTest(EtreeMixin, unittest.TestCase):
             {'class_code': 'OPRES', 'class_name': 'Operations Research', 'class_grade': 'A'},
         ])
 
+        output = open("kk","w")
+        output.write( ElementTree.tostring(list(self.document.parts.values())[0].getroot()).decode('utf-8')) 
+        output.close()
+
         with tempfile.TemporaryFile() as outfile:
             self.document.write(outfile)
 
