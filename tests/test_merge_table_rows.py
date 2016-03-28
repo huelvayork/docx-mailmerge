@@ -28,6 +28,8 @@ class MergeTableRowsTest(EtreeMixin, unittest.TestCase):
             {'class_code': 'OPRES', 'class_name': 'Operations Research', 'class_grade': 'A'},
         ])
 
+        print ( ElementTree.tostring(list(self.document.parts.values())[0].getroot()))
+
         with tempfile.TemporaryFile() as outfile:
             self.document.write(outfile)
 
